@@ -5,6 +5,10 @@ transaction in **130–210 ms**, explains *why* it looks fraudulent, raises an
 alert when policy demands a human, and maps the fraud rings hiding in the
 payment graph.
 
+**Live demo:** <https://fraud-detection-platform-0bqk.onrender.com/app/> — the
+full console, seeded with 2,500 demo transactions. It runs on Render's free
+tier, so the first visit can take 30–60 seconds to wake the service.
+
 - **Scoring:** XGBoost classifier + Isolation Forest anomaly detector + a
   transparent policy layer, all three visible in the decision.
 - **Explainability:** SHAP tree attributions on the probability scale, turned
@@ -295,8 +299,8 @@ service with no server of your own:
 
 1. Sign in at <https://dashboard.render.com> with GitHub.
 2. **New → Blueprint**, pick this repository; Render reads `render.yaml`.
-3. **Apply**. The first image build takes a few minutes; afterwards the URL is
-   `https://fraud-detection-platform-<suffix>.onrender.com/app/`.
+3. **Apply**. The first image build takes 15–30 minutes; afterwards the console
+   is live at <https://fraud-detection-platform-0bqk.onrender.com/app/>.
 
 Two things make the free plan viable here. The image **trains the model and seeds
 the demo database during the build** (`python -m fraud_platform.cli setup`), so
