@@ -287,6 +287,8 @@ Copy `.env.example` to `.env`.
 
 ## Public demo
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/yakshag30/real-time-fraud-detection-platform)
+
 The repository ships a Render blueprint (`render.yaml`), so the whole stack —
 FastAPI plus the built React console at `/app` — can be published as one HTTPS
 service with no server of your own:
