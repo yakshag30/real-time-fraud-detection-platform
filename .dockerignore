@@ -1,0 +1,13 @@
+.venv
+venv
+__pycache__
+*.pyc
+.git
+.github
+data
+artifacts
+.pip-install.log
+*.log
+.env
+web/node_modules
+web/dist
