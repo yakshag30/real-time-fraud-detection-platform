@@ -42,8 +42,5 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=5 \
 # Honour $PORT so platform hosters (Render, Railway, Cloud Run) can pick the
 # port; Docker Compose and `docker run -p 8000:8000` fall back to 8000.
 CMD ["sh", "-c", "exec uvicorn fraud_platform.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
-Paste it over Dockerfile at the repo root, commit, then Manual sync on the Blueprint page.
-
-Two notes on what to expect: the setup --rows 2500 step will run for real this time (it never executed in the failed build), so the build takes a few minutes; if it dies with Killed, drop to --rows 800. And since you removed a line, Render may reuse the cached layers above it — if the build looks like it skipped work or behaves oddly, use Manual Deploy → Clear build cache & deploy.
 
 
