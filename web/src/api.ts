@@ -1,9 +1,10 @@
-const sameOrigin =
-  typeof window !== "undefined" && window.location.port === "8000";
+// Production builds are served by FastAPI itself (at <origin>/app/), so the API
+// is whatever origin the browser loaded the page from. The Vite dev server runs
+// on :5173 and talks to the local API instead. VITE_API_URL overrides both.
+const envUrl = import.meta.env.VITE_API_URL as string | undefined;
 
 export const API_BASE: string =
-  (import.meta.env.VITE_API_URL as string | undefined) ??
-  (sameOrigin ? "" : "http://127.0.0.1:8000");
+  envUrl ?? (import.meta.env.DEV ? "http://127.0.0.1:8000" : window.location.origin);
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {

@@ -1,0 +1,24 @@
+# Render blueprint: one-click public demo of the API + React console.
+#
+# Dashboard: https://dashboard.render.com/blueprints -> New Blueprint Instance
+# -> pick this repository. Render builds the Dockerfile at the repo root, which
+# trains the models and seeds the demo database during the image build, so the
+# container only has to load them on start.
+services:
+  - type: web
+    name: fraud-detection-platform
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      # The demo database is baked into the image; never re-seed at runtime.
+      # Seeding scores thousands of transactions through SHAP, which on the free
+      # plan's 0.1 CPU would take minutes and outlast the health check.
+      - key: FRAUD_BOOTSTRAP
+        value: "false"
+      - key: LOG_LEVEL
+        value: INFO

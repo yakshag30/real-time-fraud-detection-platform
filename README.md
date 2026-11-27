@@ -285,6 +285,29 @@ Copy `.env.example` to `.env`.
 
 ---
 
+## Public demo
+
+The repository ships a Render blueprint (`render.yaml`), so the whole stack —
+FastAPI plus the built React console at `/app` — can be published as one HTTPS
+service with no server of your own:
+
+1. Sign in at <https://dashboard.render.com> with GitHub.
+2. **New → Blueprint**, pick this repository; Render reads `render.yaml`.
+3. **Apply**. The first image build takes a few minutes; afterwards the URL is
+   `https://fraud-detection-platform-<suffix>.onrender.com/app/`.
+
+Two things make the free plan viable here. The image **trains the model and seeds
+the demo database during the build** (`python -m fraud_platform.cli setup`), so
+start-up only loads them instead of spending minutes of 0.1 CPU on training and
+SHAP scoring, and the console calls the API on the same origin it was served
+from. A free Render service sleeps after 15 minutes without traffic and takes
+about a minute to wake; the demo database lives in the container, so data created
+while it runs is lost on the next restart. Set `FRAUD_BOOTSTRAP=true` if you would
+rather re-seed on boot than ship the baked database.
+
+The Streamlit console is not part of the blueprint — it is a second process
+(`cli dashboard`), intended for local use or a separate service.
+
 ## Docker
 
 ```bash
